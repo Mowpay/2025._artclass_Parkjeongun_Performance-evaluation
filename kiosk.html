@@ -19,6 +19,9 @@
         .unfriendly-mode #cart li { margin-bottom: 3px; }
         .unfriendly-mode .total-price { font-size: 1.1rem; }
         .unfriendly-mode .order-number { font-size: 2rem; }
+        .unfriendly-mode .menu-item button.qty-btn, .unfriendly-mode .menu-item button.remove-btn { padding: 3px 6px; font-size: 0.7rem; }
+        .unfriendly-mode #cart button { font-size: 0.7rem; padding: 2px 5px; }
+
 
         /* ----------------------------------- 친화 UI 스타일 ----------------------------------- */
         .friendly-mode h1, .friendly-mode h2 { font-size: 2rem; color: #333; font-weight: bold; }
@@ -33,6 +36,9 @@
         .friendly-mode .action-buttons button { padding: 12px 25px; font-size: 1.1rem; border-radius: 8px; font-weight: bold; }
         .friendly-mode .mode-btn { width: 100%; padding: 15px; font-size: 1.1rem; border: none; border-radius: 10px; background-color: #0d8cd9; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .friendly-mode .order-number { font-size: 4rem; font-weight: bold; color: #d9534f; }
+        .friendly-mode .menu-item button.qty-btn, .friendly-mode .menu-item button.remove-btn { padding: 5px 10px; font-size: 1rem; }
+        .friendly-mode #cart button { font-size: 1.1rem; padding: 5px 10px; }
+
 
         .menu-item, .menu-category-btn, .action-buttons button, .mode-btn { cursor: pointer; border: none; }
         .friendly-mode .menu-category-btn:hover { background-color: #E64A19; }
@@ -226,7 +232,6 @@
             showSection('mainScreen');
         }
 
-        // 초기화
         window.onload = updateCart;
     </script>
 </body>

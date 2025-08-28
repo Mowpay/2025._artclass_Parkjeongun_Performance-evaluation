@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>키오스크 체험</title>
+    <title>롯데리아 키오스크 체험</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,7 +14,6 @@
             align-items: center;
             min-height: 100vh;
             background-color: #f0f0f0;
-            transition: background-color 0.5s;
         }
 
         .kiosk-container {
@@ -25,126 +24,136 @@
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: all 0.5s ease-in-out;
         }
 
-        /* 1. 기본(불편한) UI 스타일 */
-        .default-ui h1 {
-            font-size: 1.2rem;
-            color: #555;
-            text-shadow: 0 0 1px rgba(0,0,0,0.2);
-            font-weight: normal;
+        .section {
+            display: none;
         }
-        .default-ui .button-group button {
-            width: 80px;
-            height: 40px;
-            font-size: 0.8rem;
-            margin: 5px;
-            background-color: #e0e0e0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            color: #777;
+        .section.active {
+            display: block;
         }
 
-        /* 2. 노인 친화적 UI 스타일 */
-        .friendly-ui h1 {
-            font-size: 2.2rem;
-            color: #333;
-            font-weight: bold;
-        }
-        .friendly-ui .button-group button {
+        h1 { font-size: 1.8rem; margin-bottom: 20px; }
+        p { font-size: 1rem; color: #666; }
+
+        .button-group button {
             width: 150px;
             height: 70px;
             font-size: 1.5rem;
-            margin: 15px;
+            margin: 10px;
             background-color: #2196f3;
             color: white;
             border: none;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
             transition: all 0.3s;
         }
-        .friendly-ui .button-group button:hover {
+        .button-group button:hover {
             background-color: #0d8cd9;
         }
-        .friendly-ui .description {
-            font-size: 1.1rem;
-            color: #666;
-            margin-top: 20px;
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .menu-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            margin-right: 15px;
+        }
+        .menu-item-info {
+            text-align: left;
+        }
+        .menu-item-info h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .menu-item-info p {
+            margin: 5px 0 0;
+            font-size: 1rem;
+            color: #555;
         }
 
-        /* 전환 버튼 스타일 */
-        #toggleButton {
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        #toggleButton:hover {
-            background-color: #f5f5f5;
+        .order-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #d9534f;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div class="kiosk-container default-ui" id="kioskUI">
-        <h1 id="mainTitle">롯데리아 키오스크</h1>
-        <div class="button-group">
-            <button>햄버거</button>
-            <button>세트메뉴</button>
-            <button>음료/커피</button>
-            <button>사이드</button>
-            <button>디저트</button>
-            <button>쿠폰</button>
+    <div class="kiosk-container">
+
+        <div id="mainScreen" class="section active">
+            <h1>롯데리아 키오스크</h1>
+            <p>화면을 터치해서 주문을 시작하세요.</p>
+            <button onclick="showSection('menuScreen')">주문 시작</button>
         </div>
-        <p id="descriptionText" class="description" style="display: none;">
-            이것은 노인을 위한 친화적 키오스크입니다.
-            <br><br>
-            ✔️ **큰 글씨와 버튼:** 시력이 좋지 않은 분도 쉽게 누를 수 있습니다.
+
+        <div id="menuScreen" class="section">
+            <h1>메뉴를 선택하세요</h1>
+            <div class="menu-item">
+                <img src="https://i.imgur.com/Kz3H6Hj.png" alt="데리버거">
+                <div class="menu-item-info">
+                    <h3>데리버거 세트</h3>
+                    <p>가격: 5,600원</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://i.imgur.com/2h4L66p.png" alt="치킨버거">
+                <div class="menu-item-info">
+                    <h3>치킨버거 세트</h3>
+                    <p>가격: 5,800원</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://i.imgur.com/F23Jk7p.png" alt="불고기버거">
+                <div class="menu-item-info">
+                    <h3>불고기버거 세트</h3>
+                    <p>가격: 6,100원</p>
+                </div>
+            </div>
             <br>
-            ✔️ **높은 색상 대비:** 글씨와 버튼이 한눈에 잘 보입니다.
-        </p>
+            <button onclick="showSection('paymentScreen')">결제하기</button>
+        </div>
+
+        <div id="paymentScreen" class="section">
+            <h1>결제가 완료되었습니다!</h1>
+            <p>잠시 후 주문번호가 나타납니다.</p>
+            <p>카운터에서 번호를 확인해주세요.</p>
+            <p class="order-number" id="orderNumber">...</p>
+            <button onclick="showSection('mainScreen')">처음으로</button>
+        </div>
+
     </div>
 
     <script>
-        const kioskUI = document.getElementById('kioskUI');
-        const mainTitle = document.getElementById('mainTitle');
-        const descriptionText = document.getElementById('descriptionText');
+        // 화면을 전환하는 함수
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
 
-        // 버튼을 클릭했을 때 실행되는 함수
-        function toggleUI() {
-            // 현재 '친화적 UI' 클래스가 있는지 확인
-            const isFriendly = kioskUI.classList.contains('friendly-ui');
-
-            if (isFriendly) {
-                // 현재 친화적 UI라면 -> 기본(불편한) UI로 변경
-                kioskUI.classList.remove('friendly-ui');
-                kioskUI.classList.add('default-ui');
-                mainTitle.textContent = '롯데리아 키오스크';
-                descriptionText.style.display = 'none';
-                
-            } else {
-                // 현재 기본 UI라면 -> 친화적 UI로 변경
-                kioskUI.classList.remove('default-ui');
-                kioskUI.classList.add('friendly-ui');
-                mainTitle.textContent = '롯데리아 키오스크';
-                descriptionText.style.display = 'block';
+            if (sectionId === 'paymentScreen') {
+                generateOrderNumber();
             }
         }
-        
-        // 초기 로드 시 '불편한 UI'를 먼저 보여주기
-        window.onload = function() {
-            // '불편한 UI'가 먼저 보이도록 토글 버튼을 추가
-            const toggleButton = document.createElement('button');
-            toggleButton.id = 'toggleButton';
-            toggleButton.textContent = '노인 친화적 UI로 변경하기';
-            toggleButton.onclick = toggleUI;
-            document.body.appendChild(toggleButton);
-        };
+
+        // 3자리 난수 주문번호 생성 함수
+        function generateOrderNumber() {
+            const randomNumber = Math.floor(Math.random() * 900) + 100; // 100부터 999까지
+            document.getElementById('orderNumber').textContent = randomNumber;
+        }
     </script>
 </body>
 </html>

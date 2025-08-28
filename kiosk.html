@@ -3,156 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>롯데리아 키오스크 체험</title>
+    <title>롯데리아 키오스크 연습</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; }
+        .kiosk-container { width: 100%; max-width: 450px; padding: 25px; background-color: #ffffff; border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s; }
+        .section { display: none; }
+        .section.active { display: block; }
+        h1 { font-size: 2rem; color: #333; margin-bottom: 20px; }
+        h2 { font-size: 1.5rem; color: #555; margin-bottom: 15px; }
 
-        .kiosk-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+        .menu-category-btn { width: 150px; height: 100px; font-size: 1.2rem; font-weight: bold; margin: 10px; background-color: #FF5733; color: white; border: none; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.2s, background-color 0.2s; }
+        .menu-category-btn:hover { background-color: #E64A19; transform: translateY(-3px); }
 
-        .section {
-            display: none;
-        }
-        .section.active {
-            display: block;
-        }
+        .menu-item { display: flex; align-items: center; margin-bottom: 15px; padding: 10px; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); cursor: pointer; transition: background-color 0.2s; }
+        .menu-item:hover { background-color: #e0e0e0; }
+        .menu-item img { width: 70px; height: 70px; border-radius: 8px; margin-right: 15px; }
+        .item-info { text-align: left; flex-grow: 1; }
+        .item-info h3 { margin: 0; font-size: 1.2rem; color: #333; }
+        .item-info p { margin: 5px 0 0; font-size: 1rem; color: #777; }
+        .add-btn { background-color: #4CAF50; color: white; border: none; padding: 8px 15px; border-radius: 5px; font-size: 1rem; cursor: pointer; transition: background-color 0.2s; }
+        .add-btn:hover { background-color: #45a049; }
 
-        h1 { font-size: 1.8rem; margin-bottom: 20px; }
-        p { font-size: 1rem; color: #666; }
+        #cart { margin-top: 20px; padding: 15px; background-color: #fafafa; border-radius: 10px; border: 1px dashed #ccc; }
+        #cart ul { list-style: none; padding: 0; }
+        #cart li { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 1rem; color: #444; }
+        #cart .remove-btn { color: #f44336; border: none; background: none; font-size: 1rem; cursor: pointer; }
+        #cart .total-price { font-size: 1.5rem; font-weight: bold; color: #333; margin-top: 15px; }
 
-        .button-group button {
-            width: 150px;
-            height: 70px;
-            font-size: 1.5rem;
-            margin: 10px;
-            background-color: #2196f3;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .button-group button:hover {
-            background-color: #0d8cd9;
-        }
+        .action-buttons button { padding: 12px 25px; font-size: 1.1rem; margin: 10px 5px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        .action-buttons .pay-btn { background-color: #2196F3; color: white; }
+        .action-buttons .back-btn { background-color: #9E9E9E; color: white; }
+        .action-buttons .pay-btn:hover { background-color: #1976D2; }
+        .action-buttons .back-btn:hover { background-color: #757575; }
 
-        .menu-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .menu-item img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            margin-right: 15px;
-        }
-        .menu-item-info {
-            text-align: left;
-        }
-        .menu-item-info h3 {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        .menu-item-info p {
-            margin: 5px 0 0;
-            font-size: 1rem;
-            color: #555;
-        }
-
-        .order-number {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #d9534f;
-            margin-top: 30px;
-        }
+        .order-number { font-size: 4rem; font-weight: bold; color: #d9534f; margin-top: 30px; }
     </style>
 </head>
 <body>
 
     <div class="kiosk-container">
-
         <div id="mainScreen" class="section active">
             <h1>롯데리아 키오스크</h1>
-            <p>화면을 터치해서 주문을 시작하세요.</p>
-            <button onclick="showSection('menuScreen')">주문 시작</button>
+            <p>메뉴 카테고리를 선택하세요</p>
+            <div class="button-group">
+                <button class="menu-category-btn" onclick="showCategory('burger')">버거</button>
+                <button class="menu-category-btn" onclick="showCategory('side')">사이드</button>
+                <button class="menu-category-btn" onclick="showCategory('drink')">음료</button>
+            </div>
+            <div id="cart">
+                <h2>장바구니</h2>
+                <ul id="cart-list"></ul>
+                <div class="total-price">총 가격: <span id="total-price">0</span>원</div>
+                <div class="action-buttons">
+                    <button class="pay-btn" onclick="showSection('paymentScreen')">주문하기</button>
+                </div>
+            </div>
         </div>
 
         <div id="menuScreen" class="section">
-            <h1>메뉴를 선택하세요</h1>
-            <div class="menu-item">
-                <img src="https://i.imgur.com/Kz3H6Hj.png" alt="데리버거">
-                <div class="menu-item-info">
-                    <h3>데리버거 세트</h3>
-                    <p>가격: 5,600원</p>
-                </div>
+            <h2 id="menuTitle"></h2>
+            <div id="menu-items-list"></div>
+            <div class="action-buttons">
+                <button class="back-btn" onclick="showSection('mainScreen')">뒤로가기</button>
             </div>
-            <div class="menu-item">
-                <img src="https://i.imgur.com/2h4L66p.png" alt="치킨버거">
-                <div class="menu-item-info">
-                    <h3>치킨버거 세트</h3>
-                    <p>가격: 5,800원</p>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="https://i.imgur.com/F23Jk7p.png" alt="불고기버거">
-                <div class="menu-item-info">
-                    <h3>불고기버거 세트</h3>
-                    <p>가격: 6,100원</p>
-                </div>
-            </div>
-            <br>
-            <button onclick="showSection('paymentScreen')">결제하기</button>
         </div>
 
         <div id="paymentScreen" class="section">
-            <h1>결제가 완료되었습니다!</h1>
-            <p>잠시 후 주문번호가 나타납니다.</p>
+            <h1>주문이 완료되었습니다!</h1>
             <p>카운터에서 번호를 확인해주세요.</p>
             <p class="order-number" id="orderNumber">...</p>
-            <button onclick="showSection('mainScreen')">처음으로</button>
+            <div class="action-buttons">
+                <button class="pay-btn" onclick="resetKiosk()">다시 시작</button>
+            </div>
         </div>
-
     </div>
 
     <script>
-        // 화면을 전환하는 함수
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+        const menuData = {
+            burger: [
+                { name: '불고기 버거', price: 4200, img: 'https://i.imgur.com/v8tT9oP.png' },
+                { name: '새우 버거', price: 4500, img: 'https://i.imgur.com/d876U3L.png' },
+                { name: '치즈 버거', price: 4300, img: 'https://i.imgur.com/Kz3H6Hj.png' },
+                { name: '치킨 버거', price: 4100, img: 'https://i.imgur.com/2h4L66p.png' },
+                { name: '한우 불고기', price: 8500, img: 'https://i.imgur.com/F23Jk7p.png' }
+            ],
+            side: [
+                { name: '양념감자', price: 2500, img: 'https://i.imgur.com/a42xH5E.png' },
+                { name: '치즈스틱', price: 2300, img: 'https://i.imgur.com/W2d0JtG.png' },
+                { name: '새우튀김', price: 2800, img: 'https://i.imgur.com/lO2v2pP.png' }
+            ],
+            drink: [
+                { name: '콜라', price: 2000, img: 'https://i.imgur.com/zWz2Z2y.png' },
+                { name: '사이다', price: 2000, img: 'https://i.imgur.com/wP62S6q.png' },
+                { name: '아메리카노', price: 2500, img: 'https://i.imgur.com/u5tE3uD.png' }
+            ]
+        };
 
+        let cart = [];
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
             if (sectionId === 'paymentScreen') {
-                generateOrderNumber();
+                if (cart.length > 0) {
+                    generateOrderNumber();
+                } else {
+                    document.getElementById('orderNumber').textContent = '장바구니가 비어있습니다.';
+                }
             }
         }
 
-        // 3자리 난수 주문번호 생성 함수
+        function showCategory(category) {
+            const menuTitle = document.getElementById('menuTitle');
+            const menuList = document.getElementById('menu-items-list');
+            menuList.innerHTML = '';
+
+            menuTitle.textContent = { burger: '버거 메뉴', side: '사이드 메뉴', drink: '음료 메뉴' }[category];
+            
+            menuData[category].forEach(item => {
+                const menuItemDiv = document.createElement('div');
+                menuItemDiv.className = 'menu-item';
+                menuItemDiv.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.price.toLocaleString()}원</p>
+                    </div>
+                `;
+                menuItemDiv.onclick = () => addToCart(item);
+                menuList.appendChild(menuItemDiv);
+            });
+            showSection('menuScreen');
+        }
+
+        function addToCart(item) {
+            cart.push(item);
+            updateCart();
+            alert(`${item.name}이(가) 장바구니에 담겼습니다.`);
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('cart-list');
+            const totalPriceSpan = document.getElementById('total-price');
+            cartList.innerHTML = '';
+            let totalPrice = 0;
+
+            cart.forEach((item, index) => {
+                totalPrice += item.price;
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.name}</span>
+                    <span>${item.price.toLocaleString()}원</span>
+                `;
+                cartList.appendChild(li);
+            });
+            totalPriceSpan.textContent = totalPrice.toLocaleString();
+        }
+        
         function generateOrderNumber() {
-            const randomNumber = Math.floor(Math.random() * 900) + 100; // 100부터 999까지
+            const randomNumber = Math.floor(Math.random() * 900) + 100;
             document.getElementById('orderNumber').textContent = randomNumber;
+        }
+
+        function resetKiosk() {
+            cart = [];
+            updateCart();
+            showSection('mainScreen');
         }
     </script>
 </body>
